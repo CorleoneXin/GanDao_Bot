@@ -12,6 +12,8 @@ from src.db.tables import User, UserRole
 from src.settings import Settings
 from ptbcontrib.log_forwarder import LogForwarder
 
+from src.help.handlers import *
+
 import logging
 import structlog
 
@@ -84,16 +86,6 @@ async def start(
         user.role = UserRole.ADMIN
     session.add(user)
 
-@command_handler("command1")
-@reply_exception
-@inject
-async def command1(update: Update, context: ApplicationContext, session: AsyncSession = Depends(tx)):
-    text_caps = ' '.join(context.args).upper()
-    reply = f'1-:{text_caps}'
-    await context.bot.send_message(chat_id=update.effective_chat.id, text=reply)
-
-
-
 async def on_startup(app: Application):
     db_path = settings.DB_PATH
     engine = create_engine(db_path)
@@ -146,4 +138,12 @@ application: Application = (
 
 application.add_error_handler(handle_error) # type: ignore
 application.add_handlers([start, set_role])
-application.add_handler(command1)
+
+application.add_handler(handle_help)
+application.add_handler(handle_command1)
+application.add_handler(handle_command2)
+
+application.add_handler(handle_WebApp)
+application.add_handler(web_app_data)
+
+# application.add_handler(handler_nest)
