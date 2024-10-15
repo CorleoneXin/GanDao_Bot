@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "base-bot"
+version = "0.1.0"
+description = "Base bot for telegram projects"
+authors = ["lurian <lurian-code@protonmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+python-telegram-bot = {extras = ["all"], version = "^20.1"}
+asyncio = "^3.4.3"
+aiosqlite = "^0.19.0"
+sqlalchemy = "^2.0.22"
+alembic = "^1.12.1"
+pydantic = "^2.5.2"
+pydantic-settings = "^2.1.0"
+ptbcontrib = { git = "https://github.com/lur1an/ptbcontrib.git", rev = "log-forwarder" }
+greenlet = "^3.0.1"
+fast-depends = "^2.4.2"
+ptb-ext = "^0.1.1"
+structlog = "^24.1.0"
+rich = "^13.7.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.2"
+pytest-asyncio = "^0.20.3"
+pytest-env = "^0.8.1"
+black = "^23.7.0"
+python-dotenv = "^1.0.0"
+debugpy = "^1.8.1"
+maturin = "^1.5.1"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
