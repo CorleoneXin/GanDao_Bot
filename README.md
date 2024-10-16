@@ -10,6 +10,7 @@ poetry install  # will create a new environment using your updated configuration
  -->
 
 poetry config virtualenvs.in-project true
+
 poetry install
 
 ## Dev mode

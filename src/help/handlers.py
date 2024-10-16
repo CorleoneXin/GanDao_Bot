@@ -8,7 +8,7 @@ from telegram import (ForceReply, InlineQueryResultArticle,
 
 from telegram.ext import filters,ConversationHandler
 from src.bot.common.context import ApplicationContext, context_types
-from src.bot.common.wrappers import command_handler,message_handler, reply_exception
+from src.bot.common.wrappers import command_handler,message_handler, reply_exception, delete_message_after
 from src.bot.errors import handle_error
 from src.bot.extractors import tx, load_user
 from src.db.config import create_engine
@@ -34,6 +34,7 @@ async def handle_help(update: Update, context: ApplicationContext, session: Asyn
     /help - show help
     /command1 - eg: /command1 abc
     /command2 - eg: /command2 abc
+    /deleteMsg - eg: /deleteMsg abc
     /WebApp
     /InLineKeyBoard2 - router
     /nested - show family
@@ -85,3 +86,11 @@ async def web_app_data(update: Update, context: ApplicationContext, session: Asy
         ),
         reply_markup=ReplyKeyboardRemove(),
     )
+    
+@command_handler("deleteMsg")
+@delete_message_after
+@inject
+async def handle_deleteMsg(update: Update, context: ApplicationContext, session: AsyncSession = Depends(tx)):
+    text_caps = ' '.join(context.args).upper()
+    reply = f'3-:{text_caps}'
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=reply)

@@ -13,6 +13,7 @@ from src.settings import Settings
 from ptbcontrib.log_forwarder import LogForwarder
 
 from src.help.handlers import *
+from src.help.conversations.conversation1 import handler_nest
 
 import logging
 import structlog
@@ -142,8 +143,9 @@ application.add_handlers([start, set_role])
 application.add_handler(handle_help)
 application.add_handler(handle_command1)
 application.add_handler(handle_command2)
+application.add_handler(handle_deleteMsg)
 
 application.add_handler(handle_WebApp)
 application.add_handler(web_app_data)
 
-# application.add_handler(handler_nest)
+application.add_handler(handler_nest)
